@@ -118,7 +118,7 @@ void checkTheWiner()
 /* This function requires input from the user */
 void makeMove(int currentUser)
 {
-	int choice = 2;
+	int choice;
 
 	printf("User %d can choose the number from 1 to 9 that make move: \n\n", currentUser);
 	fflush(stdout);
@@ -132,7 +132,7 @@ void makeMove(int currentUser)
 	In this case, choice - 1 is divided by 3, and j will contain the remainder of that division.
 	Example:
 	The expressions 0 % 3 and 1 % 3 yield 0 and 1, because these numbers are partially divisible by 3 with no remainder.
-    The expression 2 % 3 gives 2, because 2 is not divisible by 3 and the remainder is 2 itself.*/
+        The expression 2 % 3 gives 2, because 2 is not divisible by 3 and the remainder is 2 itself.*/
 	int j = (choice - 1) % 3;
 
 	if (matrix[i][j] == '*')
