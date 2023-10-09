@@ -13,10 +13,11 @@ Description :This program is a game of X or O between two users
 
 
 /* Declaration of global variables */
-char matrix [3][3];
+char matrix[3][3];
 int currentUser = 2;
-int moves = 0;
+int move = 0;
 int maxMoves = 9;
+int gameOver = 0;
 
 
 /* This function creates a table and fills it * */
@@ -34,7 +35,7 @@ void tableCreating(void)
 
 
 /* This function will print a table and fills it * */
-void tablePrint()
+void tablePrint(void)
 {
 	for(int i = 0; i < 3; i++)
 	{
@@ -50,7 +51,7 @@ void tablePrint()
 
 
 /* This function changes the user, the first user starts the game */
-void switchUser()
+void switchUser(void)
 {
 	if(currentUser == 1)
 	{
@@ -69,32 +70,47 @@ int winner()
 {
 	for(int i = 0; i < 3; i++)
 	{
-		if((matrix[i][0] == matrix[i][1] && matrix[i][1] == matrix[i][2]) || (matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i]))
+		if(matrix[i][0] == matrix[i][1] && matrix[i][1] == matrix[i][2])
 		{
 			if(matrix[i][0] == 'X')
 			{
 				return 'X';
 			}
-			else if(matrix[i][0] == '0')
+			else if(matrix[i][0] == 'O')
 			{
-				return '0';
+				return 'O';
 			}
 		}
 	}
+	for(int i = 0; i < 3; i++)
+	{
+		if(matrix[0][i] == matrix[1][i] && matrix[1][i] == matrix[2][i])
+		{
+			if(matrix[0][i] == 'X')
+			{
+				return 'X';
+			}
+			else if(matrix[0][i] == 'O')
+			{
+				return 'O';
+			}
+		}
+	}
+
 		if((matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2]) || (matrix[0][2] == matrix[1][1] && matrix[1][1] == matrix[2][0]))
 		{
 			/*Matrix[1][1] represents the center field of the matrix which is
 			essential for checking the diagonals and deciding the winner of the game.*/
+
 			if(matrix[1][1] == 'X')
 			{
 				return 'X';
 			}
-			else if(matrix[1][1] == '0')
+			else if(matrix[1][1] == 'O')
 			{
-				return '0';
+				return 'O';
 			}
 		}
-
 	return 0;
 }
 
@@ -107,10 +123,13 @@ void checkTheWiner()
 	if(Winner)
 	{
 		printf("\tPlayer %c wins!\n\n", (currentUser == 1) ? 'X' : 'O');
+		gameOver = 1;
+
 	}
-	else if(moves == maxMoves)
+	else if(move == maxMoves)
 	{
 		printf("\tThere are no winners!\n");
+		gameOver = 1;
 	}
 }
 
@@ -137,7 +156,7 @@ void makeMove(int currentUser)
 
 	if (matrix[i][j] == '*')
 	{
-		matrix[i][j] = (currentUser == 1) ? 'X' : '0';
+		matrix[i][j] = (currentUser == 1) ? 'X' : 'O';
 		tablePrint();
 	}
 
@@ -157,11 +176,11 @@ int main()
 	tableCreating();
 	tablePrint();
 
-	while(moves < maxMoves)
+	while(!gameOver)
 	{
 		switchUser();
 		makeMove(currentUser);
-		moves++;
+		move++;
 		checkTheWiner();
 	}
 	return 0;
